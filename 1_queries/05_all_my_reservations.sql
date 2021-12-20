@@ -7,3 +7,4 @@ WHERE reservations.guest_id = '1'
 GROUP BY reservations.id, properties.title, properties.cost_per_night 
 ORDER BY start_date ASC
 LIMIT 10;
+
