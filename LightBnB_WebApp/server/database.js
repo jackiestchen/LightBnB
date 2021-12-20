@@ -18,16 +18,24 @@ const pool = new Pool({
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithEmail = function (email) {
-  let user;
-  for (const userId in users) {
-    user = users[userId];
-    if (user.email.toLowerCase() === email.toLowerCase()) {
-      break;
-    } else {
-      user = null;
-    }
-  }
-  return Promise.resolve(user);
+  const queryString = `
+  SELECT id, name, email, password
+  FROM users
+  WHERE email = $1;
+  `;
+  const values = [email];
+
+  return pool
+    .query(queryString, values)
+    .then((res) => {
+      if (res.rows.length < 1){
+        return null;
+      }
+      return res.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 exports.getUserWithEmail = getUserWithEmail;
 
@@ -37,7 +45,24 @@ exports.getUserWithEmail = getUserWithEmail;
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithId = function (id) {
-  return Promise.resolve(users[id]);
+  const queryString = `
+  SELECT id, name, email, password
+  FROM users
+  WHERE id = $1;
+  `;
+  const values = [id];
+
+  return pool
+    .query(queryString, values)
+    .then((res) => {
+      if (res.rows.length) {
+        return null;
+      }
+      return res.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 exports.getUserWithId = getUserWithId;
 
@@ -104,3 +129,22 @@ const addProperty = function (property) {
   return Promise.resolve(property);
 };
 exports.addProperty = addProperty;
+
+// const queryString = `
+// SELECT id, name, email, password
+// FROM users
+// WHERE email = $1;
+// `;
+// const values = ["tristanjacobs@gmail.com"];
+
+// pool
+//   .query(queryString, values)
+//   .then((res) => {
+//     // if (res.rows.length < 1) {
+//     //   console.log("null");
+//     // }
+//     console.log(res.rows);
+//   })
+//   .catch((err) => {
+//     console.log(err.message);
+//   });
