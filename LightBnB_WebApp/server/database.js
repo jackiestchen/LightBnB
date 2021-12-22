@@ -133,7 +133,6 @@ exports.getAllReservations = getAllReservations;
  */
 const getAllProperties = function (options, limit) {
   limit = 10;
-  console.log("options: ", options);
 
   let queryString = `
   SELECT properties.*, avg(property_reviews.rating) as average_rating
@@ -147,7 +146,7 @@ const getAllProperties = function (options, limit) {
     queryParams.push(options.owner_id);
     queryString += `WHERE owner_id = $${queryParams.length}`;
   }
-  
+
   if (options.city) {
     queryParams.push(`%${options.city}%`);
     queryString += `WHERE city LIKE $${queryParams.length}`;
@@ -179,8 +178,8 @@ const getAllProperties = function (options, limit) {
   ORDER BY cost_per_night
   LIMIT $${queryParams.length};
   `;
-
-  console.log(queryString, queryParams);
+  // console.log(queryString);
+  // console.log('\n', queryParams);
   return pool
     .query(queryString, queryParams)
     .then((res) => {
@@ -198,9 +197,46 @@ exports.getAllProperties = getAllProperties;
  * @return {Promise<{}>} A promise to the property.
  */
 const addProperty = function (property) {
-  const propertyId = Object.keys(properties).length + 1;
-  property.id = propertyId;
-  properties[propertyId] = property;
-  return Promise.resolve(property);
+  // const propertyId = Object.keys(properties).length + 1;
+  // property.id = propertyId;
+  // properties[propertyId] = property;
+  // return Promise.resolve(property);
+
+  const queryString = `
+  INSERT INTO properties (
+  title, description, owner_id, cover_photo_url, thumbnail_photo_url, cost_per_night, parking_spaces, number_of_bathrooms, number_of_bedrooms, active, province, city, country, street, post_code) 
+  VALUES (
+  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15
+  )
+  RETURNING *;
+  `;
+  const values = [
+    property.title,
+    property.description,
+    property.owner_id,
+    property.cover_photo_url,
+    property.thumbnail_photo_url,
+    property.cost_per_night,
+    property.parking_spaces,
+    property.number_of_bathrooms,
+    property.number_of_bedrooms,
+    true,
+    property.province,
+    property.city,
+    property.country,
+    property.street,
+    property.post_code,
+  ];
+
+  console.log(values);
+  return pool
+    .query(queryString, values)
+    .then((res) => {
+      console.log(res.rows);
+      return res.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 exports.addProperty = addProperty;
