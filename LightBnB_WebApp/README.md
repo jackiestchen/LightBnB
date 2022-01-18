@@ -44,4 +44,15 @@
 
   ## Installation
   1. Install dependencies using the `npm install` command.
-  2. Start the web server by using the `npm run local` command
+  2. Start the web server by using the `npm run local` command.
+  3. Enter localhost:3000[http://localhost:3000/] to browser. 
+
+  ## Functionalities
+  1. Home Page 
+  ![Home Page](LightBnB_WebApp/images/homepage.png?raw=true)
+
+  ### Home page will display 10 sample listings.
+  
+  2. Search Page
+
+  
