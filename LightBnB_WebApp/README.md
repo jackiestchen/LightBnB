@@ -54,5 +54,5 @@
   ### Home page will display 10 sample listings.
   
   2. Search Page
-
-  
+  ![Search Page]()
+  ### User can search without login or sign up.
