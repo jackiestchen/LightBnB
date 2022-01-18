@@ -1,4 +1,7 @@
 # LightBnB
+## Project ERD
+
+![databaseERD](/LightBnB_WebApp/images/dberd.png?raw=true)
 
 ## Project Structure
 
@@ -47,12 +50,36 @@
   2. Start the web server by using the `npm run local` command.
   3. Enter [localhost:3000](http://localhost:3000/) to browser. 
 
+  ## Features to be implemented in future
+  * New listings will show in `My Listings`
+  * Create/delete reservations and listings
+  * Search results will show more listings as user scrolls down
+    
   ## Functionalities
-  1. Home Page 
-  ![Home Page](/images/homepage.png?raw=true)
+  ### Home Page 
+  ![Home Page](/LightBnB_WebApp/images/homepage.png?raw=true)
 
   ### Home page will display 10 sample listings.
-  
-  2. Search Page
-  ![Search Page](/images/searchpage.png?raw=true)
+  ***
+  ### Search Page
+  ![Search Page](/LightBnB_WebApp/images/searchpage.png?raw=true)
   ### User can search without login or sign up.
+  ***
+  ### Login Page
+  ![Login Page](/LightBnB_WebApp/images/loginpage.png?raw=true)
+  ![User Page](/LightBnB_WebApp/images/userpage.png?raw=true)
+  ### User can login to see their reservations and listings.
+  ***
+  ### Sign Up Page
+  ![Sign Up Page](/LightBnB_WebApp/images/signup.png)
+  ### User can sign up to create listings.
+  ***
+
+  ## Dependencies
+  * bcrypt
+  * body-parser
+  * cookie-session
+  * express
+  * nodemon
+  * pg
+
